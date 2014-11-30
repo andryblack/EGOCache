@@ -118,6 +118,7 @@ static inline NSString* cachePathForKey(NSString* directory, NSString* key) {
 		}
 		
 		[_cacheInfo removeObjectsForKeys:removedKeys];
+        [removedKeys release];
 		self.frozenCacheInfo = _cacheInfo;
 		[self setDefaultTimeoutInterval:86400];
 	}
@@ -273,7 +274,7 @@ static inline NSString* cachePathForKey(NSString* directory, NSString* key) {
 #pragma mark String methods
 
 - (NSString*)stringForKey:(NSString*)key {
-	return [[NSString alloc] initWithData:[self dataForKey:key] encoding:NSUTF8StringEncoding];
+	return [[[NSString alloc] initWithData:[self dataForKey:key] encoding:NSUTF8StringEncoding] autorelease];
 }
 
 - (void)setString:(NSString*)aString forKey:(NSString*)key {
